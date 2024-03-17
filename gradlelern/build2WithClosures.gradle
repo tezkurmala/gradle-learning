@@ -1,0 +1,87 @@
+//Closures - lambdas like in java
+def echoIt = {
+    println "Hello Closure World!"
+}
+
+println echoIt //some random content for the closure. like automatic toString - build_5pwcw39joiu3n8t08ygrwayu9$_run_closure1@7dbee9b
+println echoIt() //executes the closure because of the braces and also prints null because the closure returns no value
+echoIt() //executes the echoIt closure
+
+//Simple Closure with param
+println "-----Simple Closure with param-----"
+def echoParameter = { parameter ->
+    println "Hello Closure World with $parameter!"
+}
+
+echoParameter("string-param")
+echoParameter(10)
+
+//Closure with typed param
+println "-----Closure with typed param-----"
+def echoTypedParameter = { String parameter ->
+    println "Hello Closure World with $parameter!"
+}
+echoTypedParameter("string-param")
+//echoTypedParameter(10) //fails runtime due to parameter type mismatch.
+
+//Closure with implicit param
+println "-----Closure with implicit param-----"
+def echoImplicitParameter = {
+    println "Hello Closure World with $it!" //it is an automatic implicit parameter
+}
+echoImplicitParameter("implicit-string-param")
+echoImplicitParameter(10)
+
+//Using Closure type instead of def
+println "-----Using Closure type instead of def-----"
+Closure echoMultipleParams = { a, b, c ->
+    println a
+    println b
+    println c
+}
+echoMultipleParams("string-param", 10, 5.9)
+
+//Method taking Closure as param
+println "-----Method taking Closure as param-----"
+def methodWithClosureAsParam(closure) {
+    closure() * 2//executes the closure received and multiples the result by 2
+    //Returns the outcome of multiplication as this is last line in method
+}
+
+println methodWithClosureAsParam({10}) //passing param as a closure (that returns value 10)
+
+//single param does not need normal braces
+println methodWithClosureAsParam {15}
+
+//Method taking multiple params having Closure among them
+println "-----Method taking multiple params having Closure among them-----"
+def methodWithClosureInParams(int factor, closure) {
+    closure() * factor//executes the closure received and multiples the result by factor
+    //Returns the outcome of multiplication as this is last line in method
+}
+
+println methodWithClosureInParams(5, {10})
+
+//removing normal braces is possible but needs assigning to variable before printing
+def result = methodWithClosureInParams 5, {15}
+println result
+
+//Method taking multiple params having Closure as first among them
+println "-----Method taking multiple params having Closure as first among them-----"
+def methodWithClosureAsFirstParam(closure, int factor) {
+    closure() * factor//executes the closure received and multiples the result by factor
+    //Returns the outcome of multiplication as this is last line in method
+}
+
+println methodWithClosureAsFirstParam({10}, 5)
+
+//removing normal braces is NOT possible if closure is not the last param
+// def result2 = methodWithClosureAsFirstParam {15}, 5
+// println result2
+
+//Groovy inbuilt example for Closure
+println "-----Groovy inbuilt example for Closure-----"
+[1,2,3,'four'].each { //'each' is an inbuilt method taking Closure as input to print every number passed into it
+    println it
+}
+

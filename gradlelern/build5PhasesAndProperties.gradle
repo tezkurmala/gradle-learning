@@ -1,0 +1,83 @@
+import java.text.SimpleDateFormat
+/**
+Lifecycle Phases in Gradle
+1. Initialization
+    init.gradle + <other>.gradle
+        First phase and Runs before the script run starts
+        The .gradle files are looked for in user-home-directory/.gradle/init.d/
+        Files in init.d are run in file name text order
+
+        Setup info like
+        enterprise wide configurations fpr something like
+        where to find customised plugins
+        by having properties based on current environment
+        local machine versus CI server etc
+    settings.gradle
+        Runs at the end of initialization phase
+
+2. Configuration
+        build.gradle
+           In configuration phase, build.gradle iss converted into Script Interface object
+            that delegates to Project interface object. Project object of the folder
+            in which build.gradle exists.
+            So build.gradle can access methods and properties from Script Interface
+            And Script Interface has reference to Project object
+3. Execution
+        Performs tasks/actions in build.gradle
+ */
+println ">>> build.gradle  --> executed during configuration phase"
+println """>>> build.gradle  --> Accessing delegate 'project' object and 
+'gradle' object through 'Project' object"""
+println ">>> build.gradle  --> Gradle version ${project.gradle.gradleVersion}"
+println ">>> build.gradle  --> Curly braces are required only when evaluation/execution is required to compute the value. Here we have the value readily available in the varibale"
+println ">>> build.gradle  --> Gradle version $project.gradle.gradleVersion"
+println """
+>>> build.gradle  --> Using project object in the expression is not necessary
+ as it is automatically understood by Gradle as obvious delegate object 
+ in build.gradle files"""
+logger.info ">>> build.gradle  --> Gradle version $gradle.gradleVersion"
+logger.info ">>> build.gradle  --> Gradle User Home Dir $gradle.gradleUserHomeDir"
+logger.info ">>> build.gradle  --> Gradle Home Dir $gradle.gradleHomeDir"
+logger.info ">>> build.gradle  --> Build File $buildFile"
+logger.info ">>> build.gradle  --> Relative path of Build File is ${relativePath(buildFile)}"
+
+logger.info ">>> build.gradle  --> Gradle has gradleVersion property: ${project.gradle.hasProperty("gradleVersion")}"
+logger.info ">>> build.gradle  --> Project has projectDir property: ${hasProperty('projectDir')}" //project. is implicit being the delegate object
+
+
+if(project.hasProperty("customKey")) {
+    logger.info ">>> build.gradle  --> Property customKey is configured with $customKey in either project gradle.properties or global gradle.properties or System properties"
+} else {
+    logger.info ">>> build.gradle  --> Property customKey is missing!!"
+}
+
+project.ext.greeting = "Hello!!"
+project.ext.doWish = {
+    def projectName = getName()
+    "Hello Extension Closure from $projectName!"
+}
+// project. is optional because Gradle f/w takes care of reaching out to the delegate object 'Project' (in this case because the script is build.gradle)
+if(hasProperty('greeting')) {
+    logger.info ">>> build.gradle  --> Extension greeting Property value: $greeting"
+} else {
+    logger.info ">>> build.gradle  --> Extension greeting Property missing"
+}
+
+//It is good practice to always check for the availability of custom properties before assuming and using them
+if(hasProperty('doWish')) {
+    logger.info ">>> build.gradle  --> Extension doWish Property Closure evaluated value: ${doWish()}"
+} else {
+    logger.info ">>> build.gradle  --> Extension doWish Property missing"
+}
+
+gradle.ext.timestamp = {
+    def dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+    dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"))
+    dateFormat.format(new Date())
+}
+
+if(gradle.hasProperty('timestamp')) {
+    logger.info ">>> build.gradle  --> Extension timestamp Property Closure computed value: ${gradle.timestamp()}"
+} else {
+    logger.info ">>> build.gradle  --> Extension timestamp Property missing"
+}

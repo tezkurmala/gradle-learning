@@ -1,0 +1,53 @@
+defaultTasks 'hello', "hello2"
+
+logger.info ">>> build.gradle --> This is executed durig the configuration phase"
+
+task hi  //creation of task just by name and not actions
+
+project.hi.doLast {  //tasks can be accessed directly by their name (project.hi).
+    logger.info "hi!!"
+}
+
+task hello {
+    //hello is the name of the task that will be created
+    //Sending a Closure to the task creation object.
+    // Closure delegate object would be Task hello object
+
+    //setting values for task properties using Closure on the delegate Task object
+    description = "Log the name of the task"
+    group = "Welcome"
+    doFirst { //Accessing task method doFirst and sending Closure param
+        logger.info "I am 1st Task action added using doFirst and my delegate Task name is: $name"
+    }
+    doLast { //Accessing task method doLast and sending Closure param
+        logger.info "I am 2nd Task action added using doLast and my delegate Task name is: $name"
+    }
+}
+
+hello.doLast { //Accessing task method doLast and sending Closure param
+    logger.info "I am 3rd Task action added using doLast and my delegate Task name is: $name"
+}
+
+
+//Project is the delegate object for build.gradle Script object
+//So, accessing task directly as hello instead of project.hello
+
+logger.info hello.description
+logger.info hello.group
+
+task hello2 {
+    description = "Log the name of the task"
+    group = 'Welcome'
+}
+
+hello2.doFirst{
+    logger.info "My task name is $name and this is my 1st defined action"
+}.doLast{
+    logger.info "My task name is $name and this is my 2nd defined action"
+}.doLast{
+    logger.info "My task name is $name and this is my 3rd defined action"
+}.doLast{
+    logger.info "My task name is $name and this is my 4th defined action"
+}.doFirst{
+    logger.info "My task name is $name and this is my 5th defined action"
+}

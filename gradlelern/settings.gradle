@@ -1,0 +1,2 @@
+println ">>> settings.gradle  --> executed during initialization phase"
+

@@ -1,0 +1,10 @@
+//Gradle logging can be enabled using -i program argument in Run Configuration of Gradle
+//Accessing logger object available in Script interface
+//This build.gradle script here will be mapped to Script object making the
+// logger object in Script interface available for usage
+//Including -i also starts logging good amount of other logs that come out of standard gradle stuff
+logger.info("-----Hello Gradle at Info log level----")
+
+apply {
+    println '---Hello again!!---'
+}

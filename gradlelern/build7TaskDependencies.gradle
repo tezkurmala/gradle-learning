@@ -1,0 +1,56 @@
+logger.info ">>> build.gradle --> This is executed durig the configuration phase"
+//defaultTasks 'doStartProcess', 'doStep2', 'doStep3', 'doFinal'
+defaultTasks 'doFinal' //Lets add dependencies for this task
+task doStartProcess {
+    doLast {
+        logger.info "$name - Now starting the process - OK!"
+    }
+}
+
+task doStep2 (dependsOn: 'doStartProcess'){
+    doLast {
+        logger.info "$name - Executed!!"
+    }
+}
+
+task doStep3 (dependsOn: 'doStep2'){
+    doLast {
+        logger.info "$name - Executed!!"
+    }
+}
+
+task doFinal (dependsOn: ['doStep3']){ //dependsOn property of Task object is set during creation of Task doFinal
+    doLast {
+        logger.info "$name - Completed!!"
+    }
+}
+
+// Using task filtering for task dependency
+//project.tasks is the TaskContainer object that is a utility method to access Tasks information
+logger.info ">>> build.gradle - Tasks starting with doStep word are ${project.tasks.findAll {it.name.startsWith('doStep')}}"
+logger.info ">>> build.gradle - Tasks starting with doStep word are ${project.tasks.findAll {task-> task.name.startsWith('doStep')}}"
+// Using task filtering for task dependency
+//So, we can avoid hardcoding on task definition and use like this
+// (dependsOn: tasks.findAll {task-> task.name.startsWith('doStep')})
+
+//We can also set dependsOn programatically like this based on any condition
+
+doStep3.dependsOn doStep2
+//or
+project.getTasksByName("doStep3", true).getAt(0).dependsOn(doStep2)
+//or
+project.getTasks().getByName("doStep3").dependsOn([doStep2, doStartProcess]) //can also be a collection
+
+logger.info "Tasks in the taskGraph are >>> $project.gradle.taskGraph" //TaskExecutionGraph
+
+gradle.taskGraph.whenReady {
+    logger.info ">>> $project.gradle.taskGraph.allTasks"
+}
+
+gradle.taskGraph.beforeTask {
+    logger.info ">>> Before Task $it.name"
+}
+
+gradle.taskGraph.afterTask { task ->
+    logger.info ">>> After Task $task.name"
+}

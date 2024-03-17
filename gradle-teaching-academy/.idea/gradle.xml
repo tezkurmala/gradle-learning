@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/academy-audit" />
+            <option value="$PROJECT_DIR$/academy-audit-integration" />
+            <option value="$PROJECT_DIR$/academy-audit-interface" />
+            <option value="$PROJECT_DIR$/academy-audit-repository" />
+            <option value="$PROJECT_DIR$/academy-courses" />
+            <option value="$PROJECT_DIR$/academy-courses-integration" />
+            <option value="$PROJECT_DIR$/academy-courses-interface" />
+            <option value="$PROJECT_DIR$/academy-courses-repository" />
+            <option value="$PROJECT_DIR$/academy-registration" />
+            <option value="$PROJECT_DIR$/academy-registration-integration" />
+            <option value="$PROJECT_DIR$/academy-registration-interface" />
+            <option value="$PROJECT_DIR$/academy-registration-repository" />
+            <option value="$PROJECT_DIR$/academy-shared" />
+            <option value="$PROJECT_DIR$/academy-student" />
+            <option value="$PROJECT_DIR$/academy-student-integration" />
+            <option value="$PROJECT_DIR$/academy-student-interface" />
+            <option value="$PROJECT_DIR$/academy-user-details" />
+            <option value="$PROJECT_DIR$/academy-user-details-integration" />
+            <option value="$PROJECT_DIR$/academy-user-details-interface" />
+            <option value="$PROJECT_DIR$/academy-user-details-repository" />
+            <option value="$PROJECT_DIR$/academy-utils" />
+            <option value="$PROJECT_DIR$/academy-web" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

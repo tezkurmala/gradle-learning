@@ -1,0 +1,64 @@
+import java.text.*
+
+SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+sdf.setTimeZone(TimeZone.getTimeZone("UTC"))
+System.out.println "Hello World now:" + sdf.format(new Date())
+
+println "Hello World now:" + sdf.format(new Date())
+
+sayHello()
+
+void sayHello(){
+    println "Hello world from method!!"
+}
+
+int doubleIt(int i) {
+    i*2
+}
+println doubleIt(2)
+
+def s1 = "a string"
+println s1
+def s2 = 'a string'
+println s2
+def s3 = """ A multi
+line
+string 
+"""
+println s3
+
+//String interpolation
+def aval = 4
+println "value of aval is $aval"
+
+def scriptName = 'gradle'
+//works only when surrounded by double quotes and not single quotes
+println "I'm learning ${scriptName.toUpperCase()} script"
+
+//Properties
+
+class Person {
+    String name
+    Integer age
+
+    Person(name, age) {
+        this.name = name
+        this.age = age
+    }
+}
+
+def p1 = new Person("Rama", 35)
+println p1.age
+p1.setAge(39)
+println(p1.age)
+p1.age = 38 // uses hidden setter
+println p1.age
+
+//with a Map
+Map m = new HashMap()
+m.put("foo", "hen")
+println m.get('foo')
+m.foo = 'bill' // put on existing key
+m.bar = "jill" //uses hidden put method of map even for a new key
+
+println m.foo //uses hidden get method on map

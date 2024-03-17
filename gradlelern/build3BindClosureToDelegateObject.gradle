@@ -1,0 +1,23 @@
+//Closure resolution
+class Person {
+    String name
+    Integer age
+
+    Person(name, age) {
+        this.name = name
+        this.age = age
+    }
+
+    def bindAndExecute(Closure c) {
+        //Whatever random closure is sent as parameter, we are setting its owner/context/delegate object to current object
+        //This allows the Closure logic to run with a known scope
+        c.delegate = this //Too powerful...This is like attaching external code to an object
+        c() //Evaluate/Execute after binding closure to 'this' as owner/context/delegate object
+    }
+}
+
+def p1 = new Person("Ram", 35)
+println p1.getName()
+//Binding p1 object to a random closure
+p1.bindAndExecute {name = 'Tez'}
+println p1.getName() //p1 state changed because of an external closure code
